@@ -20,9 +20,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "ORACLE_NAME=\"Teleos\" ORACLE_ROLE=\"Deployment + DevOps\" bash ~/.claude/statusline",
-    "refreshInterval": 5,
-    "hideVimModeIndicator": false
+    "command": "CLAUDE_CONFIG_DIR=/mnt/c/Users/User/.claude ~/.claude/ccline/ccline",
+    "padding": 0
   },
   "env": {
     "ORACLE_NAME": "Teleos",
