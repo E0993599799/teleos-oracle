@@ -16,6 +16,8 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 
 - [What is mission-control-vercel-curated2](issues/03-vercel-curated2-investigation.md): its `.git` is an inert leftover (8KB, no object database, interrupted-copy artifact) safe to remove — but the working tree is a real "salary-certificate" feature tied to a *third* distinct Vercel project/team. Graduated a new question into ticket 07.
 - [Cruft/backup safety audit](issues/05-cruft-safety-audit.md): none of the 2.63G is git-tracked (no history-bloat risk). 5 of 8 items are safe-to-delete; `_archive` (1.7G), `_archive-bundles` (855M, contains a deliberate captain-maid git-bundle backup), and `_site-hierarchy-patch-backup` need a quick owner glance before deletion.
+- [mission-control root reconciliation](issues/01-mission-control-root-reconciliation.md): root has zero commits not already in `origin/main` (0 ahead, 5 behind) — no real divergence from nested `arigeo-hr` to reconcile, root is just stale plus local mess. Sync root to `origin/main`; accept both DU-conflict deletions (`pnpm-lock.yaml`, `tools/LAST_BACKUP_DIR.txt`); nested `arigeo-hr` left as a low-priority "remove later" candidate. Execution graduated into ticket 08.
+- [Omega feature disposition](issues/02-omega-feature-disposition.md): Omega isn't abandoned debris — it's **"OMEGA — Fencing Competition Control,"** Serra-oracle's separate, Eak-approved, actively-developed product (confirmed via closed GitHub issues #322/#323), unrelated to ARIGEO HR. Leave entirely untouched; not Teleos's call. Root's sync (ticket 08) must explicitly preserve it.
 
 ## Not yet specified
 
@@ -25,6 +27,7 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 - Whether `ai-orchestrator`, `auth-portal` (no top-level `package.json` — is it actually broken, or just read at the wrong depth?), `instagram-scraper`, `orry-thailand-landing` need real documentation (a CLAUDE.md/README) beyond a Registry one-liner.
 - `pwp` (empty placeholder) — likely a trivial removal note in the narrative doc rather than its own ticket, but not yet decided.
 - Whether the Workspace repo's own structure (submodule detached, several embedded nested repos found by accident) is itself worth a structural-hygiene ticket, once the "why was mission-control detached" open question has an answer.
+- Whether OMEGA (a second, unrelated product living inside `mission-control/` by directory-nesting accident) eventually deserves its own repo — explicitly not this map's call; Serra owns it.
 
 ## Out of scope
 
