@@ -18,6 +18,7 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 - [Cruft/backup safety audit](issues/05-cruft-safety-audit.md): none of the 2.63G is git-tracked (no history-bloat risk). 5 of 8 items are safe-to-delete; `_archive` (1.7G), `_archive-bundles` (855M, contains a deliberate captain-maid git-bundle backup), and `_site-hierarchy-patch-backup` need a quick owner glance before deletion.
 - [mission-control root reconciliation](issues/01-mission-control-root-reconciliation.md): root has zero commits not already in `origin/main` (0 ahead, 5 behind) — no real divergence from nested `arigeo-hr` to reconcile, root is just stale plus local mess. Sync root to `origin/main`; accept both DU-conflict deletions (`pnpm-lock.yaml`, `tools/LAST_BACKUP_DIR.txt`); nested `arigeo-hr` left as a low-priority "remove later" candidate. Execution graduated into ticket 08.
 - [Omega feature disposition](issues/02-omega-feature-disposition.md): Omega isn't abandoned debris — it's **"OMEGA — Fencing Competition Control,"** Serra-oracle's separate, Eak-approved, actively-developed product (confirmed via closed GitHub issues #322/#323), unrelated to ARIGEO HR. Leave entirely untouched; not Teleos's call. Root's sync (ticket 08) must explicitly preserve it.
+- [Execute root sync](issues/08-execute-root-sync.md): done. Root's `HEAD` now exactly matches `origin/main` (`65ee5fe`); both conflicts resolved by accepting deletion; Omega untouched byte-for-byte. Root is no longer stuck.
 
 ## Not yet specified
 
