@@ -15,8 +15,11 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 ## Decisions so far
 
 - [What is mission-control-vercel-curated2](issues/03-vercel-curated2-investigation.md): its `.git` is an inert leftover (8KB, no object database, interrupted-copy artifact) safe to remove — but the working tree is a real "salary-certificate" feature tied to a *third* distinct Vercel project/team. Graduated a new question into ticket 07.
+- [Cruft/backup safety audit](issues/05-cruft-safety-audit.md): none of the 2.63G is git-tracked (no history-bloat risk). 5 of 8 items are safe-to-delete; `_archive` (1.7G), `_archive-bundles` (855M, contains a deliberate captain-maid git-bundle backup), and `_site-hierarchy-patch-backup` need a quick owner glance before deletion.
 
 ## Not yet specified
+
+- The outer Workspace repo itself (remote `brtstore4340-glitch/Marcuzx-Forge.git`) currently has unrelated uncommitted changes (modified/deleted tracked files under `ai-orchestrator/`, `auth-portal/`, and others) — surfaced incidentally by the cruft audit, not yet scoped or investigated. Separate from mission-control root's own stuck state (ticket 01).
 
 - Individual git-health audits for repos beyond mission-control (captain-maid, control_fleet, arigeo-auth, cms-arigeo, and the 13 `royal-master-oracle` fleet members) — not yet scanned for the same class of issues (stuck merges, uncommitted staged work, broken worktrees) found in mission-control root. Worth a pass once mission-control's own resolution ticket sets a template for what to look for.
 - Whether `ai-orchestrator`, `auth-portal` (no top-level `package.json` — is it actually broken, or just read at the wrong depth?), `instagram-scraper`, `orry-thailand-landing` need real documentation (a CLAUDE.md/README) beyond a Registry one-liner.
