@@ -1,5 +1,5 @@
 Type: task
-Status: open
+Status: resolved
 
 ## Question
 
@@ -15,3 +15,15 @@ Concretely:
 This touches a live production deployment (personal account) — confirm each step with พี่เอก before executing, not just the overall decision.
 
 See [CONTEXT.md](../CONTEXT.md), ticket 03, ticket 07, ticket 10.
+
+## Answer
+
+Executed 2026-09-04/05, พี่เอก's go-ahead. `gh auth login` added under `E0993599799` (confirmed correct — not a separate personal account after all, per พี่เอก).
+
+1. Removed the inert `.git` leftover (8KB, no object database — confirmed nothing lost).
+2. Confirmed: repo name `salary-certificate`, account `E0993599799`, private.
+3. `git init`, reviewed the full staged file list for secrets before committing (none found — `.vercel/project.json` has only non-secret IDs, `supabase.ts` reads credentials from env vars, no `.env*` files present), initial commit, `gh repo create E0993599799/salary-certificate --private --source=. --push`. Pushed: **https://github.com/E0993599799/salary-certificate**.
+4. **Skipped, per พี่เอก** — re-linking Vercel's Git integration would change the live, smoothly-running deployment's trigger behavior (auto-deploy on push), which is a real production behavior change, not something to do just because it was on the original checklist. The actual goal (real version control so it's not one `rm -rf` from unrecoverable) is already achieved without it.
+5. Not done — optional tidiness, not pursued.
+
+Note: first commit attempt in `mission-control` (for the unrelated v2 plan files, same session) accidentally swept in Serra-oracle's already-staged Omega files; caught immediately via `git show --stat`, reversed with `git reset --soft HEAD~1` before it could cause any real problem — logged here since it happened during the same working session, not because it touched this ticket's own repo.
