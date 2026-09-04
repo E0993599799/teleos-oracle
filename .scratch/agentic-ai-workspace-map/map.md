@@ -27,7 +27,9 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 - [Execute curated2 repo init](issues/11-execute-curated2-repo-init.md): done. Pushed to **https://github.com/E0993599799/salary-certificate** (private). Vercel re-link skipped, per พี่เอก — a live, smoothly-running deploy's trigger method isn't something to change just because it was on the original checklist.
 - [Worktree cleanup follow-up: hermes-watcher](issues/04-worktree-cleanup-decision.md): พี่เอก confirmed the held-back content real and wanted — recovered the 15-file `khun-runtime` toolkit into `royal-master-oracle/tools/khun-runtime/` (commit `3de5bc1`, pushed), then deleted the now-redundant orphaned directory. All 5 worktree-cleanup candidates from ticket 04 are now fully resolved.
 
-Open frontier: [ticket 12](issues/12-fleet-wide-git-health-audit.md) — fleet-wide git health audit, graduated from fog 2026-09-05, not yet worked.
+- [Fleet-wide git health audit](issues/12-fleet-wide-git-health-audit.md): 14 repos audited, 11 clean, 2 minor (arigeo-auth, cms-arigeo — normal feature-branch drift, not urgent), 1 real risk. `all-oracle` (Fleet Scribe/Memory Coordinator) and `agent-brain` (private memory-hygiene store, deliberately outside mission-control) had their purposes identified while auditing. Mission-control root's incident was a one-off, not a fleet-wide pattern. Graduated ticket 13.
+
+Open frontier: [ticket 13](issues/13-control-fleet-reconciliation.md) — control_fleet has ~1 month of uncommitted work including an unstaged deletion of a whole module (`src/zeus/*`), diverged from its own production branch.
 
 ## Not yet specified
 
@@ -37,6 +39,7 @@ Open frontier: [ticket 12](issues/12-fleet-wide-git-health-audit.md) — fleet-w
 - `pwp` (empty placeholder) — likely a trivial removal note in the narrative doc rather than its own ticket, but not yet decided.
 - Whether the Workspace repo's own structure (submodule detached, several embedded nested repos found by accident) is itself worth a structural-hygiene ticket, once the "why was mission-control detached" open question has an answer.
 - Whether OMEGA (a second, unrelated product living inside `mission-control/` by directory-nesting accident) eventually deserves its own repo — explicitly not this map's call; Serra owns it.
+- `cms-arigeo`'s feature branch (`feat/portal-handoff-login`) is 50 commits behind `origin/main` — worth confirming with whoever owns that branch whether `main` is the actually-deployed branch and this is meant to be caught up, or if it's an intentionally long-running branch. No uncommitted work at risk here, just a positioning question — not urgent enough to ticket on its own (ticket 12).
 
 ## Out of scope
 

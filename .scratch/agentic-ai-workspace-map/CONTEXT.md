@@ -41,6 +41,10 @@ Glossary for the wayfinder effort mapping `/mnt/d/01 Main Work/Boots/Agentic AI/
 - **Why was `mission-control` detached from submodule tracking in the Workspace repo** (per the "remove stale mission-control submodule gitlink" commit)? Affects whether other nested repos have the same buried history.
 - ~~What is `mission-control-vercel-curated2`~~ — resolved by ticket 03 (inert `.git`, real working tree tied to a third Vercel project/team). New question this raised: see ticket 07.
 
+**all-oracle** — `royal-master-oracle/all-oracle`, real git repo, clean. Fleet Scribe + Memory Coordinator, budded from `tham`, reports to Zeus.
+
+**agent-brain** — `royal-master-oracle/agent-brain`, real git repo, clean. A private memory-hygiene store deliberately kept outside `mission-control` so no client/project repo can accidentally sweep it up via `git add` — references `INCIDENT_2026-07-18_fleet-repo-memory-hygiene.md`.
+
 ## Not a term, but load-bearing fact
 
 `PROJECT_REGISTRY.md` staleness was already flagged once (Teleos → Khun-Oracle, 2026-08-27/28) and punted as "not a doc I own directly." This effort's destination absorbs that loose end.
