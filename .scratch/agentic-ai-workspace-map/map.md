@@ -27,11 +27,12 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 - [Execute curated2 repo init](issues/11-execute-curated2-repo-init.md): done. Pushed to **https://github.com/E0993599799/salary-certificate** (private). Vercel re-link skipped, per พี่เอก — a live, smoothly-running deploy's trigger method isn't something to change just because it was on the original checklist.
 - [Worktree cleanup follow-up: hermes-watcher](issues/04-worktree-cleanup-decision.md): พี่เอก confirmed the held-back content real and wanted — recovered the 15-file `khun-runtime` toolkit into `royal-master-oracle/tools/khun-runtime/` (commit `3de5bc1`, pushed), then deleted the now-redundant orphaned directory. All 5 worktree-cleanup candidates from ticket 04 are now fully resolved.
 
+Open frontier: [ticket 12](issues/12-fleet-wide-git-health-audit.md) — fleet-wide git health audit, graduated from fog 2026-09-05, not yet worked.
+
 ## Not yet specified
 
 - The outer Workspace repo itself (remote `brtstore4340-glitch/Marcuzx-Forge.git`) currently has unrelated uncommitted changes (modified/deleted tracked files under `ai-orchestrator/`, `auth-portal/`, and others) — surfaced incidentally by the cruft audit, not yet scoped or investigated. Separate from mission-control root's own stuck state (ticket 01).
 
-- Individual git-health audits for repos beyond mission-control (captain-maid, control_fleet, arigeo-auth, cms-arigeo, and the 13 `royal-master-oracle` fleet members) — not yet scanned for the same class of issues (stuck merges, uncommitted staged work, broken worktrees) found in mission-control root. Worth a pass once mission-control's own resolution ticket sets a template for what to look for.
 - Whether `ai-orchestrator`, `auth-portal` (no top-level `package.json` — is it actually broken, or just read at the wrong depth?), `instagram-scraper`, `orry-thailand-landing` need real documentation (a CLAUDE.md/README) beyond a Registry one-liner.
 - `pwp` (empty placeholder) — likely a trivial removal note in the narrative doc rather than its own ticket, but not yet decided.
 - Whether the Workspace repo's own structure (submodule detached, several embedded nested repos found by accident) is itself worth a structural-hygiene ticket, once the "why was mission-control detached" open question has an answer.
