@@ -29,7 +29,9 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 
 - [Fleet-wide git health audit](issues/12-fleet-wide-git-health-audit.md): 14 repos audited, 11 clean, 2 minor (arigeo-auth, cms-arigeo — normal feature-branch drift, not urgent), 1 real risk. `all-oracle` (Fleet Scribe/Memory Coordinator) and `agent-brain` (private memory-hygiene store, deliberately outside mission-control) had their purposes identified while auditing. Mission-control root's incident was a one-off, not a fleet-wide pattern. Graduated ticket 13.
 
-Open frontier: [ticket 13](issues/13-control-fleet-reconciliation.md) — control_fleet has ~1 month of uncommitted work including an unstaged deletion of a whole module (`src/zeus/*`), diverged from its own production branch.
+- [control_fleet reconciliation](issues/13-control-fleet-reconciliation.md): the "deletion" was the intentional half of a fleet-wide Zeus→Khun rename (77 files, verified `src/zeus → src/khun-oracle` rename plus new notification/supervisor/routing subsystems with tests). Committed (`fd96485`), merged with origin's 3 unique commits (1 real conflict in `scripts/line-github-inbox.mjs`, resolved by keeping HEAD's verified-correct generalized routing + unioning one phrase variant rather than picking a side), pushed (`01de5d9`). Fully reconciled, no divergence remains.
+
+No open frontier — map fully resolved.
 
 ## Not yet specified
 
