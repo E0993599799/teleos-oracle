@@ -23,6 +23,7 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 - [Execute worktree cleanup](issues/09-execute-worktree-cleanup.md): done. `gh-bridge-adapter`/`hermes-watcher-smoke` actually had the Windows-path mismatch (not the 3 orphans as first thought) — `git worktree remove --force` refused, fixed via `git worktree prune`. All 4 directories removed and verified gone; `hermes-watcher` and `issue-286` confirmed untouched.
 - [Registry & narrative doc](issues/06-registry-and-narrative-doc.md): both destination deliverables written. `/mnt/d/01 Main Work/Boots/Agentic AI/PROJECT_REGISTRY.md` (25 rows, explicit needs-audit markers, no silent omissions) and `teleos-oracle/ψ/writing/2026-09-04_agentic-ai-workspace-map-findings.md` (prioritized narrative). Generator automation flagged as a gap, not built.
 - [Third Vercel project investigation](issues/07-third-vercel-project-investigation.md): **`prj_cDTDRatZHXSthMwJ4g3AXBL4Rxyq` is live**, genuinely serving the "salary-certificate" feature (พี่เอก confirmed directly — it belongs to his personal Vercel account, outside the org account used everywhere else). Reverses ticket 03's framing: `mission-control-vercel-curated2`'s working tree isn't dead weight, it's the only source for a live deployment with zero real version control. Graduated ticket 10.
+- [Version control for curated2](issues/10-version-control-curated2.md): not an arigeo-hr duplicate — its `package.json` identifies it as a diverged "Marcuzx Forge local control host" snapshot. Decided: `salary-certificate` gets its own standalone repo (its own product). พี่เอก separately wants a differently-detailed salary-certificate feature built into arigeo-hr's ESS module — genuine new feature work, out of scope for this map, not ticketed here. Execution graduated into ticket 11.
 
 ## Not yet specified
 
@@ -38,3 +39,4 @@ A fresh, accurate `PROJECT_REGISTRY.md` snapshot — one canonical file at the W
 
 - Consolidating the arigeo family into fewer services — confirmed deliberate microservice architecture, not duplication (พี่เอก, this session).
 - Executing any fix this map surfaces — every fix is a ticket for a future "Work through the map" session, never done during charting.
+- Building a differently-detailed salary-certificate feature into arigeo-hr's ESS module (ticket 10) — genuine new product development, not workspace-mapping/cleanup work. A separate future effort, not tracked on this map.
