@@ -6,6 +6,19 @@
 
 ## Explorations
 
+### 2026-09-06 0120 (deep)
+- [[2026-09-06/0120_ARCHITECTURE|Architecture]]
+- [[2026-09-06/0120_CODE-SNIPPETS|Code Snippets]]
+- [[2026-09-06/0120_QUICK-REFERENCE|Quick Reference]]
+- [[2026-09-06/0120_TESTING|Testing]]
+- [[2026-09-06/0120_API-SURFACE|API Surface]]
+
+**Key insights**:
+- No traditional test infrastructure exists (verified: no test runners/frameworks, no CI test checks, no lint config) — quality is instead enforced via changeset-based versioning (every change requires an authored `.changeset/*.md`), a plugin/package version-sync script (`scripts/sync-plugin-version.mjs`), and documentation-structure rigor.
+- The "API surface" is the skill invocation contract itself: `disable-model-invocation: true` in frontmatter marks user-invoked skills; the architectural invariant is that user-invoked skills may call model-invoked ones but never other user-invoked skills. Cross-harness metadata (Claude Code frontmatter + `agents/openai.yaml` for Codex) keeps this contract portable.
+- Deep architecture pass confirmed the promoted/non-promoted bucket lifecycle (`engineering/`, `productivity/` vs. `in-progress/`, `misc/`, `deprecated/`) and traced the full dependency chain from `package.json` → `plugin.json` sync → README curation → docs sync.
+- Code snippets pass surfaced a reusable ~240-line bash "wizard" framework (TTY-aware color, cross-platform URL opening, idempotent `.env` handling, secret redaction) shared across setup-style skills.
+
 ### 2026-09-06 0112 (default)
 - [[2026-09-06/0112_ARCHITECTURE|Architecture]]
 - [[2026-09-06/0112_CODE-SNIPPETS|Code Snippets]]
