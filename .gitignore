@@ -1,0 +1,3 @@
+# Ignore origin symlinks only (source lives in ghq)
+# Note: no trailing slash - origin is a symlink, not a directory
+ψ/learn/**/origin
