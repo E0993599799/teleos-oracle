@@ -35,6 +35,14 @@ it's meant to go **into `arigeo-hr` (hr-arigeo.com)** as a module inside that co
   next concrete steps (archive/delete the mistaken repo? start scoping the arigeo-hr module?)
   are still open, not yet authorized.
 
+## Update — 2026-09-13
+
+Eak authorized archiving (not deleting) `E0993599799/salary-certificate`. Done via
+`gh repo archive` — confirmed `isArchived: true` as of 2026-09-12T17:44:41Z. Repo is
+preserved, read-only, and no longer a candidate to build on by mistake. Deletion remains
+explicitly out of scope per Eak's instruction ("archive it for now, don't delete yet").
+Scoping the arigeo-hr module is still open — not started.
+
 ## Why this is being written down
 
 Same failure shape as the attendance-module mixup same day: a routing/planning pass
