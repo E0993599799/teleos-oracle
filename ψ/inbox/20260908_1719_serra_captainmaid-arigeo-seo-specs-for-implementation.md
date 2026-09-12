@@ -56,5 +56,19 @@ Both specs got a real content change (not just wording), pushed to `serra-oracle
 
 ---
 
+## Update — 2026-09-12 (Teleos, live-domain verification)
+
+Confirmed against `https://www.captain-maid.com` directly (`curl`, no code inspection) that the infra-scoped fix is live and working:
+
+- **`robots.txt`**: now includes `Sitemap: https://www.captain-maid.com/sitemap.xml`.
+- **`sitemap.xml`**: no longer empty — lists all static routes plus product pages (e.g. `/th/products/glass-cleaner`), `lastmod` 2026-09-10.
+- **Canonical tag**: `/th/products/glass-cleaner` now renders `<link rel="canonical" href="https://www.captain-maid.com/th/products/glass-cleaner"/>` — resolves to the actual product URL, no longer falling back to homepage metadata.
+
+`captain-maid.com` (apex) 308-redirects to `www.captain-maid.com` as expected — not an issue.
+
+This closes out the `NEXT_PUBLIC_SITE_URL` / infra-scoped piece of the captain-maid spec. The CMS-SEO-field `generateMetadata` wiring (item #1 from the 2026-09-09 update above) and the arigeo/cms-arigeo items are unaffected by this check — still open.
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
