@@ -70,5 +70,24 @@ This closes out the `NEXT_PUBLIC_SITE_URL` / infra-scoped piece of the captain-m
 
 ---
 
+## Update — 2026-09-12 (Teleos, arigeo Content-Signal check + owner policy decision)
+
+Verified current state of `arigeo.com` directly (`curl`, no code inspection) against the two arigeo-project gaps from the original spec — both confirmed still open, unchanged:
+
+- **`Content-Signal`**: absent from both the HTTP response headers and `robots.txt` on every checked path. `robots.txt` currently has only `User-Agent: *` / `Allow: /` / `Disallow: /api/` / `Host` / `Sitemap` — no Content-Signal line.
+- **`/llms.txt`**: still returns `HTTP 200` with `content-type: text/html`, serving the homepage — same silent-absorption bug the spec identified in the `[locale]` dynamic route.
+
+**Owner decision (Eak, 2026-09-12)** — the policy-value blocker on Content-Signal is now resolved:
+
+```
+Content-Signal: search=yes, ai-train=no, ai-input=yes
+```
+
+i.e. allow search-index crawling and AI answer-engine use of arigeo.com content, but disallow using it for model training. This applies to `arigeo.com`; no decision requested yet for `captain-maid.com`, `cms-arigeo.com`, `hr.arigeo.com`, `auth.arigeo.com`, or `my.arige.com` (per project domain map Eak gave: arigeo.com is the main project, captain-maid.com is a product landing page, cms-arigeo.com/hr.arigeo.com/auth.arigeo.com are internal parts of the project, my.arige.com is another landing page — sic on spelling, not re-verified).
+
+This decision unblocks item 2 of the original arigeo-project spec (`ψ/outbox/2026-09-08_SPEC-ARIGEO-SEO-FIX.md` in `serra-oracle`) for whoever implements it — the header can now be added to `next.config.mjs`/`vercel.json`/middleware (and mirrored into `robots.txt`) with this exact value, no further owner sign-off needed on the value itself.
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
