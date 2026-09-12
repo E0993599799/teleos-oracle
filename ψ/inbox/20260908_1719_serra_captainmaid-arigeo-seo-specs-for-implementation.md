@@ -46,5 +46,15 @@ Three research/spec documents, code-location and root-cause work only — no cod
 
 ---
 
+## Update — 2026-09-09 (via cross-session message from serra-oracle-12)
+
+Both specs got a real content change (not just wording), pushed to `serra-oracle` main at `d650fa5`:
+
+- Both `captain-maid` and `arigeo-project` product pages fetch a CMS SEO field (Payload's `seo.metaTitle`/`metaDescription`/`ogImage`/`noIndex` on Products/Brands, from `cms-arigeo`), but neither's `generateMetadata` actually reads it — staff editing that field in Payload admin currently does nothing.
+- Folded into both specs: new item #1 in the captain-maid spec, new item 3b in the arigeo spec — added as an early step in each implementation order since it's small/isolated and belongs alongside the other `generateMetadata` work.
+- Does **not** change the infra-scoped piece (the `NEXT_PUBLIC_SITE_URL` Vercel env var on captain-maid) — still the same fix, still in progress as of this note (env var set, redeploy triggered, live domain not yet confirmed to reflect it — see session for troubleshooting).
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
