@@ -113,5 +113,17 @@ Net: Finding 4 is fully re-confirmed, zero drift toward correction. All three cm
 
 ---
 
+## Update — 2026-09-12 (Teleos, Finding 6 — resolved the open runtime question)
+
+Read both hooks directly (`revalidateFrontends.ts`, `revalidatePage.ts`) and grepped every place each is wired into a collection, to close the one thing the audit explicitly left open: "did not verify runtime behavior of either revalidation hook... whether `revalidatePage.ts` is actually still called anywhere, vs. dead code itself."
+
+- **`revalidateFrontends.ts` — live and active.** Wired via `afterChange` on `Brands.ts` and `Products.ts`, both of which **are** registered in `payload.config.ts`. On save it POSTs to two hardcoded targets — `arigeo` (tags `brands`+`products`) and `captain-maid` (tag `products` only) — each with its own secret (`ARIGEO_REVALIDATE_SECRET`/`CAPTAIN_MAID_REVALIDATE_SECRET`, falling back to `REVALIDATE_SECRET`).
+- **`revalidatePage.ts` — confirmed dead code, answering the audit's open question.** Its only wiring is `afterChange` on `DynamicPages.ts` — but `DynamicPages` is **not imported or registered anywhere in `payload.config.ts`** (grepped, zero matches). A collection that isn't registered with Payload never fires its hooks, so this hook cannot run in the deployed system. Not "possibly superseded" — it is inert.
+- **New finding, not in the original audit's Finding 1 list**: `DynamicPages` is an 8th unregistered collection, alongside the six ecommerce ones and `Tenants`. Same shape as Finding 1 (file exists, hook wiring exists, never registered) — worth folding into whatever decision resolves Finding 1, since it's the same pattern of abandoned/paused work with no doc trail.
+
+This resolves Finding 6's open runtime question outright: no decision needed on "which hook to keep" in the sense the audit framed it — `revalidateFrontends` is the only one actually running. The remaining decision is narrower: whether `revalidatePage.ts`/`DynamicPages` should be finished and registered, or deleted as dead code.
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
