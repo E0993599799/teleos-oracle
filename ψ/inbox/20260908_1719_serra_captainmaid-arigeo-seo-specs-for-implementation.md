@@ -89,5 +89,18 @@ This decision unblocks item 2 of the original arigeo-project spec (`ψ/outbox/20
 
 ---
 
+## Update — 2026-09-12 (Teleos, cms-arigeo audit re-check against current code)
+
+Re-verified the cms-arigeo audit (`ψ/outbox/2026-09-08_SPEC-CMS-ARIGEO-PAYLOAD-AUDIT.md` in `serra-oracle`) against the live local checkout at `/mnt/d/01 Main Work/Boots/Agentic AI/mission-control/cms-arigeo/cms-arigeo/`, which has moved on since the audit (repo HEAD now `23bb22eb`, 2026-09-11, vs. the audit's 2026-09-08 read). Read code directly (`payload.config.ts`, `Users.ts`, `payload-strategy.ts`), not docs.
+
+- **Finding 1 (six ecommerce collections unregistered)** — still true, unchanged. `payload.config.ts` still registers exactly the same 21 collections (Users, Media, Brands, ProductCategories, Solutions, Products, Posts, Testimonials, Pages, SiteSettings, Categories, ProductVariants, 6 Builder collections, UserLoginLogs). `Cart.ts`, `Checkout.ts`, `Orders.ts`, `Payments.ts`, `Customers.ts`, `Wishlist.ts`, and `Tenants.ts` all still exist as files under `src/payload/collections/` and are still not imported anywhere in the config. No decision has been made yet.
+- **Finding 3 (auth model drift)** — still true, unchanged. `Users.ts` still has `disableLocalStrategy: true`; admin auth is still routed exclusively through `arigeoOidcStrategy` (`src/lib/identity/payload-strategy.ts`) via `auth.arigeo.com`. Still undocumented in `CMS-DESIGN-V3.md`/`PHASE-3-ARCHITECTURE.md`.
+- **Finding 4 (21 vs. 32 claimed collections)** — the 21-registered count independently reconfirmed against code (matches the audit exactly). Did not re-open `FINAL_SUMMARY.md`/`PHASE-3-SUMMARY.md` to check whether their 32-collection claim has since been corrected — unverified either way.
+- **Findings 2, 5, 6** (stale disabled-collection docs, undocumented page-builder subsystem, two revalidation hooks) — not re-checked this pass; these are multi-doc comparisons rather than single-file code reads and weren't verified against current state.
+
+**Net**: none of the audit's two decision-blocking findings (1 and the repo-layout question) have been resolved as of 2026-09-12. Nothing here is Teleos-scoped to fix — flagging status only, per the original spec's own routing note.
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
