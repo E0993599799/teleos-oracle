@@ -102,5 +102,16 @@ Re-verified the cms-arigeo audit (`ψ/outbox/2026-09-08_SPEC-CMS-ARIGEO-PAYLOAD-
 
 ---
 
+## Update — 2026-09-12 (Teleos, Finding 4 doc-text re-check)
+
+Closed the one thing left unverified above: read `FINAL_SUMMARY.md` and `PHASE-3-SUMMARY.md` directly. Neither has been touched since before the audit — both still overclaim exactly as Finding 4 described:
+
+- **`FINAL_SUMMARY.md`** (last commit `3e48fb7c`, 2026-08-01 — predates the audit): still claims **"32 localized collections"** (line 17), still has a **"Collections Overview (32 Total)"** section header (line 190) with a live-looking **"Multi-Tenant Collections (1)"** (line 196) and **"Ecommerce Collections (6)"** (line 207) breakdown, and repeats "32 collections" twice more (lines 462, 882). No correction, no date-stamp-as-historical.
+- **`PHASE-3-SUMMARY.md`** (last commit `27164cec`, 2026-08-09 — also predates the audit): line 257 still states **"✅ Tenants collection enabled"** — confirmed false (`Tenants` is not in `payload.config.ts`, per the Finding 1 re-check above).
+
+Net: Finding 4 is fully re-confirmed, zero drift toward correction. All three cms-arigeo decision items (Finding 1, the repo-layout question, and now Finding 4's doc fix) remain untouched since the 2026-09-08 audit.
+
+---
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
