@@ -1,4 +1,17 @@
 {
+  "language": "thai",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"[LANGUAGE RULE] ตอบเป็นภาษาไทยเป็นหลักเสมอ ใช้ภาษาอังกฤษเฉพาะศัพท์เทคนิค (code, file paths, commands) ตามกฎใน CLAUDE.md ของ teleos-oracle — กฎนี้ครอบคลุมทุกข้อความที่ตอบผู้ใช้\"}}'"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(git log *)",
