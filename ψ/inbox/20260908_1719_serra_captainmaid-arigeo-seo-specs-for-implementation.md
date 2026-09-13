@@ -141,5 +141,21 @@ Implemented item 2 of the arigeo-project spec (`ψ/outbox/2026-09-08_SPEC-ARIGEO
 
 - **`/llms.txt` fix** (also item 2's sibling gap) and the **CMS-SEO-field `generateMetadata` wiring** (2026-09-09 update above) remain open — not touched in this pass.
 
+---
+
+## Update — 2026-09-13 (Teleos, deploy triggered — 3 more commits, live now)
+
+Eak said "trigger the deploy now." Before doing that blindly, checked Vercel's git integration context and found an **orphaned branch** `hermes/arigeo-content-signal-llms-20260912` (created 2026-09-12, never merged, no PR) that had already solved this same spec item — better than my first commit — including the sibling `/llms.txt` gap I hadn't touched yet. Adopted its work rather than re-deriving it, then hit two build-breaking issues discovered only by actually pushing:
+
+1. **`fix(seo)` commit (`f877b2d`)**: rewrote `next.config.mjs`'s header `source` to the hermes branch's scoped regex (excludes `/api`, `/_next`, `/_vercel`, static-asset extensions — my first commit at `1d1d732` had blindly applied `Content-Signal` to every path including API/JSON/static responses) and added `app/llms.txt/route.ts` (404, was `HTTP 200` homepage HTML before).
+2. **`fix(build)` commit (`72627b4`)**: the previous commit's deploy (`dpl_4oXpYiA92`) errored — this repo has a `scripts/production-contract-check.mjs` prebuild gate that hardcoded `app/robots.ts` as a required file/content check; my earlier commit had converted that to `app/robots.txt/route.ts`. Updated the script's two references to the new path. Passed `node scripts/production-contract-check.mjs` and `npm run build` locally — but still errored on Vercel (`dpl_6xYbf5`), same "missing" error, now for the *new* path.
+3. **`fix(build)` commit (`6fdc741`)** — the actual root cause: `.vercelignore` had an **unanchored** `*.txt` (and `*.md`/`*.html`/`*.ps1`/`*.zip`/`*.tsbuildinfo`) rule. Its own comment says "Root-level drafts, reports, archives" but with no leading `/`, gitignore-style matching applies it at *every* directory depth — silently excluding `app/robots.txt/` and `app/llms.txt/` (Next.js route-handler folders named after their URL path) from what Vercel uploads to build, even though both were committed to git and visible in `git ls-tree origin/master`. `next build` locally never catches this — `.vercelignore` only affects Vercel's upload step, not the build itself. Anchored all six rules with a leading `/`, verified via `git check-ignore` against a throwaway repo that the `app/` route folders are no longer matched while true root-level files (`BUILD-SUMMARY.txt` etc.) still are.
+
+Deploy `dpl_A251q9Z6nT12g3PK9yKAcMR6ECZF` went `READY`, aliased to `www.arigeo.com`, and I verified live: `Content-Signal` header present on `/` (absent on `/api/health`), `robots.txt` carries the directive, `/llms.txt` returns 404. **This closes out arigeo-project spec item 2 in full** (both the header and the `/llms.txt` gap).
+
+Left the `hermes/...` branch itself untouched (didn't delete it) — its content is now superseded on `master`, but deleting someone else's branch wasn't asked for.
+
+Still open: the **CMS-SEO-field `generateMetadata` wiring** (2026-09-09 update above), and everything in the `cms-arigeo` audit (Findings 1/4/6 above).
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
