@@ -125,5 +125,21 @@ This resolves Finding 6's open runtime question outright: no decision needed on 
 
 ---
 
+---
+
+## Update — 2026-09-13 (Teleos, Content-Signal implemented)
+
+Implemented item 2 of the arigeo-project spec (`ψ/outbox/2026-09-08_SPEC-ARIGEO-SEO-FIX.md` in `serra-oracle`) — the header piece that was blocked on owner policy, now unblocked by Eak's 2026-09-12 decision (`search=yes, ai-train=no, ai-input=yes`).
+
+- Worked from a **fresh clone** in scratchpad, not the local checkout at `mission-control/arigeo-project` — that checkout is 30 commits stale and has unrelated uncommitted WIP (junk files, an image-hostname edit, a `.gitignore` change) that isn't mine to touch or build on top of. Left it untouched.
+- `next.config.mjs`: added `headers()` returning `Content-Signal: search=yes, ai-train=no, ai-input=yes` on `/:path*` (all routes).
+- `app/robots.ts` → replaced with `app/robots.txt/route.ts` (raw route handler). Next's typed `MetadataRoute.Robots` (`RobotsFile`) has no field for a `Content-Signal` directive — confirmed by reading the type in `node_modules/next/dist/lib/metadata/types/metadata-interface.d.ts` — so the old metadata-convention file would have silently dropped the line. The route handler emits the exact directive text, preserving the original `Allow`/`Disallow`/`Sitemap`/`Host` rules.
+- Verified locally: `npx tsc --noEmit` clean, `next build` succeeded (`/robots.txt` compiled as a static route), then ran the built app (`next start`) and confirmed via `curl` both the HTTP header on `/` and `/th`, and the exact `robots.txt` body.
+- Pushed to `E0993599799/arigeo` `master` at `1d1d732` (was `7884670`).
+
+**Not yet done**: this repo's `vercel.json` has an `ignoreCommand` gate requiring `[deploy-production]` (or `[deploy-preview]`) literally in the commit message for Vercel to actually build — my commit doesn't have that tag, so `1d1d732` is on `master` but **has not triggered a production deploy**. Live `arigeo.com` still shows no `Content-Signal` as of this push. Whether/when to trigger the deploy is Eak's call, not assumed here.
+
+- **`/llms.txt` fix** (also item 2's sibling gap) and the **CMS-SEO-field `generateMetadata` wiring** (2026-09-09 update above) remain open — not touched in this pass.
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
