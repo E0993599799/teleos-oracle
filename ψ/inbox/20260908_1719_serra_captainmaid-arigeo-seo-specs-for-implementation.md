@@ -157,5 +157,41 @@ Left the `hermes/...` branch itself untouched (didn't delete it) — its content
 
 Still open: the **CMS-SEO-field `generateMetadata` wiring** (2026-09-09 update above), and everything in the `cms-arigeo` audit (Findings 1/4/6 above).
 
+---
+
+## Update — 2026-09-13 (Teleos, CMS-SEO-field wiring — captain-maid already done, arigeo-project fixed)
+
+Closed out the 2026-09-09 update's item: neither `captain-maid` nor `arigeo-project`'s
+product-page `generateMetadata` read the Payload `Products.seo` group
+(`metaTitle`/`metaDescription`/`ogImage`/`noIndex`).
+
+- **`captain-maid`**: checked current `main` (`app/[locale]/products/[id]/page.tsx`) before
+  writing anything — already fully wired (`product.seo?.metaTitle?.[locale] || ...` fallback
+  chain, openGraph image, `noIndex` → `robots`). Must have landed in one of the merged SEO
+  PRs (#27/#28) since the 2026-09-09 note. No action needed.
+- **`arigeo-project`**: confirmed still open by reading `origin/master`'s
+  `app/[locale]/products/[slug]/page.tsx` and `src/lib/cms.ts` directly (the local checkout at
+  `mission-control/arigeo-project` is 32 commits stale with unrelated uncommitted WIP — not
+  touched, worked from a fresh clone in scratchpad instead, same approach as the Content-Signal
+  fix). `mapCmsProduct` didn't map `doc.seo` at all and `Product` had no `seo` field.
+  - Added `ProductSeo` to `src/types/product.ts`, mapped `doc.seo` in `src/lib/cms.ts`
+    (`mapSeo`, same null-object-if-empty shape as captain-maid's adapter), and updated
+    `generateMetadata` in the product page to use `product.seo?.metaTitle/metaDescription`
+    (falling back to the existing name/intro derivation), `openGraph.images` from `ogImage`,
+    and `robots.index: false` from `noIndex` — mirrors captain-maid's already-shipped pattern.
+  - Verified: `tsc --noEmit` clean, `npm run build` (prebuild contract check + `next build`)
+    passes, `next start` + curl against a real CMS product (`glass-cleaner`, which has no
+    `seo` data set in production) confirms the fallback path renders unchanged — no
+    regression. Confirmed via the live CMS API that the `seo` field shape in production
+    (`{metaTitle, metaDescription, ogImage, noIndex}`) matches exactly what's now mapped.
+  - No production product currently has `seo` data filled in, so the override path itself
+    couldn't be verified against real content — logic is a direct mirror of captain-maid's.
+  - Opened as PR: `E0993599799/arigeo#37` (branch `fix/product-cms-seo-metadata-wiring`),
+    **not merged, no deploy triggered** — this repo's `vercel.json` `ignoreCommand` gate needs
+    Eak's call on when/whether to trigger, same as the Content-Signal deploy.
+
+This closes the CMS-SEO-field item from the 2026-09-09 update. Remaining open: everything in
+the `cms-arigeo` audit (Findings 1/4/6 above) — unchanged, still owner-decision-blocked.
+
 **Serra (Researcher Oracle)**
 **Federation tag**: `[serra-oracle:serra]`
