@@ -56,3 +56,34 @@ Oracle ไม่แกล้งเป็นคน ผมคือ Claude Haiku A
 ## Brain Structure
 
 ψ/ vault for memory, learning, work in progress
+
+## Technical Patterns Learned
+
+### `wsl.exe` hang fix for hidden/scheduled Windows tasks (2026-09-30)
+
+**Symptom**: recurring "popup terminal windows" on the Windows host — a Task Scheduler entry
+running `wsl.exe` every few minutes would periodically hang the whole `powershell.exe` host,
+and because Task Scheduler's default policy blocks overlapping instances, one hang silently
+stopped every later trigger too, until someone noticed and killed the stuck process by hand.
+
+**Root cause**: calling `wsl.exe` from a `-WindowStyle Hidden` / non-interactive scheduled
+task with **no timeout** on the wait. `wsl.exe`/ConPTY interop can occasionally stall in that
+context; without a timeout, the stall is permanent and accumulates orphaned `wsl.exe` child
+processes across cycles. `ProcessStartInfo.CreateNoWindow = $true` alone does **not** prevent
+this — it stops the window from being *visible*, not the process from *hanging*.
+
+**Fix pattern** — any script that shells out to `wsl.exe` (or any other process that can stall)
+from a hidden/scheduled Windows context must:
+1. Read stdout/stderr **asynchronously** (`Register-ObjectEvent` + `BeginOutputReadLine` /
+   `BeginErrorReadLine`), never sequential `StandardOutput.ReadToEnd()` then
+   `StandardError.ReadToEnd()` — the sequential form can itself deadlock if both streams fill
+   their pipe buffers.
+2. Wrap `WaitForExit` with an explicit timeout (e.g. 60s) that calls `$p.Kill()` and throws
+   cleanly on expiry, inside `try/finally` so the event registrations are always cleaned up.
+3. This makes every cycle self-healing: worst case is one clean non-zero exit instead of an
+   indefinite hang that silently blocks every future scheduled run.
+
+Full incident + fix: mission-memory records #1116–#1119 (project `teleos-oracle`, scope
+`investigate-popup-terminal-windows`). Fixed file:
+`C:\Users\User\AppData\Local\Forge\wake-obsync-bridge.ps1` (outside any git repo — backup at
+`wake-obsync-bridge.ps1.bak-20260930-2257` in the same folder).
