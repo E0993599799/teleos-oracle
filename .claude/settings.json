@@ -28,7 +28,8 @@
       "Bash(rg *)",
       "Bash(ls *)",
       "Bash(tail *)",
-      "Bash(wc *)"
+      "Bash(wc *)",
+      "Bash(/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"C:\\cleanup-drive-c.ps1\"*)"
     ]
   },
   "statusLine": {
