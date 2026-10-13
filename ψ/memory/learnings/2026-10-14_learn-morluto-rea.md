@@ -10,4 +10,5 @@ concepts: ["learn", "codebase", "mcp", "reverse-engineering", "evidence", "types
 - **What**: `rea-agents` 6.4.0 — TypeScript/Node CLI and stdio MCP server driving Hopper, Ghidra and IDA; entry points `src/main.ts` / `src/cli.ts` share `src/composition/binary.ts`.
 - **Pattern worth reusing**: results are Evidence with content-addressed IDs plus residual Unknowns tagged by required confidence (observed/derived/inferred), so uncertainty travels with the answer.
 - **Security shape**: per-session capability tokens over 0600 Unix sockets for bridges; explicitly not a sandbox; MIT license, lawful-use disclaimer.
-- **Caveat**: learned at HEAD `df3d96da8`, behind upstream `cddf31d55`; `docs/` and `.agents/` unread. Docs: `ψ/learn/morluto/rea/rea.md`.
+- **Windows**: experimental, Ghidra-only (x64 PE + raw 6502, 25 read-only ops); `install.sh` is macOS/Linux only, use `npx rea-agents setup` on Windows.
+- **Caveat**: learned at HEAD `df3d96da8`, behind upstream `cddf31d55`; `docs/cli.md`, parts of `docs/installation.md` and 2 of 4 `.agents` skills read, the rest not. Docs: `ψ/learn/morluto/rea/rea.md`.
