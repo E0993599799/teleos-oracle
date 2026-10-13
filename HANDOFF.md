@@ -29,8 +29,10 @@ chat history or `ψ/outbox/` alone to carry state forward.
 
 ## Next safe action
 
-- Resume the pending `/learn https://github.com/morluto/rea` request now that the
-  bootstrap gate is satisfied.
+- `/learn https://github.com/morluto/rea` is DONE (2026-10-14): 3 docs + hub in
+  `ψ/learn/morluto/rea/`, learning in `ψ/memory/learnings/2026-10-14_learn-morluto-rea.md`.
+  Not yet committed (`ψ/learn/` is disposable per fleet hygiene; the learning file is the durable part).
+- Governance files committed + pushed as `0730be0`.
 - No other pending thread is known; treat any prior in-flight task as closed
   unless `ψ/outbox/` or recent commits say otherwise.
 
