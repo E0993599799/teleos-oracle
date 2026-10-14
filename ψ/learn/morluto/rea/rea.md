@@ -7,6 +7,23 @@
 
 ## Explorations
 
+### 2026-10-14 2151 (docs full read, 4 agents, rea-agents 6.5.0) — closes the "~67 docs/*.md unread" gap from the 1940 pass
+- [[2026-10-14/2151_DOCS-FULL-ENGINES|Docs: Engine Providers]] — 19 files, ~3,077 lines read: all Ghidra variants (provider, DOS, MIPS, NativeAOT, PPC, PSP, RISC-V), IDA, JEB, Apktool, Frida, native-investigation, Go/Rust/raw binaries, firmware, binary-diagnostics, windows-ghidra-p0
+- [[2026-10-14/2151_DOCS-FULL-PLATFORMS|Docs: Platform Analysis]] — 13 files, 2,462 lines read: Android, ADB, Apple application, Electron (fuses + observation), Flutter, Harmony, managed code (.NET), EVM bytecode, WASM, SQLite, website module trace/script export
+- [[2026-10-14/2151_DOCS-FULL-JS-NETWORK|Docs: JavaScript & Network Capture]] — 17 files, all read in full: JS application graph/workflows/artifact-reconstruction/recovery/runtime-observation/reconciliation, browser observation + scenario contract, web-network-captures, web-runtime, web-source-location, HTTP/3 lab, packet captures, pcap analysis, signal recordings, process capture, recorded crashes
+- [[2026-10-14/2151_DOCS-FULL-PROTOCOL-META|Docs: Protocol, Meta & Specs]] — 22 files: index, client-configuration, client-verification, mcp-contracts, mcp-prompts, migration-6.2, reconstruction ledgers/readiness, releasing, roadmap, tool-design, error-contract.schema.json, user-visible-errors.csv, architecture.mermaid, and both `docs/specs/` feature folders (2356-wasm-interface-comparison, solidity/cbor-metadata), each spec/plan/tasks/verification quad
+
+**Key findings from the full docs pass** (spot-checked against source, all confirmed):
+- **Version mismatch, unresolved**: `docs/android-analysis.md:8` says the feature is "present on repository main and in npm 4.1.0" — the package is 6.5.0 now; not clear if the doc is stale or npm 4.1.0 is a different distribution channel.
+- **Platform-coverage contradiction between two capture docs**: `docs/packet-captures.md:22` calls macOS capture inspection "a capability gap"; `docs/pcap-analysis.md:107-109` frames macOS/Windows TShark execution as "unverified here" after a Linux-only recorded check. Confirmed both wordings exist; the docs may cover different tools without saying so.
+- **WorkBuddy client claims verification with no corresponding lane**: `docs/client-configuration.md:287` says "through WorkBuddy are verified," but `docs/client-verification.md` has no WorkBuddy section — confirmed by grep (zero hits).
+- **Malformed CSV row**: `docs/user-visible-errors.csv` row `harm_rank=26` has an unquoted comma inside a field ("Removed fixed byte, entry, depth, and path limits.") that shifts its later columns — confirmed by direct read.
+- **Index gap**: `docs/index.md`'s guide table has no entry for GDB, Rizin, objdump or pwntools, though `docs/architecture.mermaid` lists them as providers — confirmed by grep (zero hits in index.md).
+- Many version pins across the engine docs (JEB 5.48.0, Frida Core 17.23.2, Binwalk 3.1.0, Apktool 2.7.0, aioquic 1.2.0 vs 1.5.0 depending on doc, Chrome 153 vs 154 depending on doc) carry no re-verification date — "last verified by the doc," not confirmed current.
+- Two `docs/specs/` feature folders look internally complete (`tasks.md` fully checked) but `solidity/cbor-metadata/verification.md` itself says a final correction was never re-run — treat as in-progress, not shipped, until confirmed otherwise.
+
+**Still not read even after this pass**: `third_party/` READMEs (vendored upstream docs), `.vitepress/` site config, `docs/assets/`, and the 18 translated `docs/readme/README_*.md` files (not distinct content, skipped intentionally). Nothing was executed; all claims above are static reads.
+
 ### 2026-10-14 1940 (--deep, 5 agents, rea-agents 6.5.0) — supersedes the 0222 pass on facts
 - [[2026-10-14/1940_ARCHITECTURE|Architecture]] — layout, all entry points, composition root, every engine bridge and its auth, Swift/Java helpers, 6.4.0→6.5.0 changes
 - [[2026-10-14/1940_CODE-SNIPPETS|Code Snippets]] — 18 verbatim excerpts with path:line

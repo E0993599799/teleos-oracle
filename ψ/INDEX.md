@@ -159,6 +159,10 @@ Output of `/learn` per external repo (`learn/.origins` lists studied repos; `lea
 - [1940 CODE SNIPPETS](learn/morluto/rea/2026-10-14/1940_CODE-SNIPPETS.md)
 - [1940 QUICK REFERENCE](learn/morluto/rea/2026-10-14/1940_QUICK-REFERENCE.md)
 - [1940 TESTING](learn/morluto/rea/2026-10-14/1940_TESTING.md)
+- [2151 DOCS FULL ENGINES](learn/morluto/rea/2026-10-14/2151_DOCS-FULL-ENGINES.md)
+- [2151 DOCS FULL PLATFORMS](learn/morluto/rea/2026-10-14/2151_DOCS-FULL-PLATFORMS.md)
+- [2151 DOCS FULL JS NETWORK](learn/morluto/rea/2026-10-14/2151_DOCS-FULL-JS-NETWORK.md)
+- [2151 DOCS FULL PROTOCOL META](learn/morluto/rea/2026-10-14/2151_DOCS-FULL-PROTOCOL-META.md)
 
 ## Writing
 
