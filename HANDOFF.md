@@ -77,8 +77,9 @@ no budget change, no paid hosted runner, no workflow edits on master, no self-ce
 - Still awaiting: (1) Aek + independent reviewer: test-vs-workflow decision for `cancel-in-progress`, (2) whether to benchmark
   more (cold cache / idle host), (3) `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1: policy READ 2026-10-15
   (`governance/repeat-failure-learning-policy-v1.yaml` on `origin/feat/repeat-failure-learning-gate-v1-20261014`, status
-  IMPLEMENTED_PENDING_REVIEW_AND_ACTIVATION) but ACK NOT sent; proposed scope = "read and understood" only, not a review or
-  approval, Aek has not decided, (4) independent reviewer (`verity-oracle-af` is MEMORY_BOOTSTRAP_BLOCKED and busy with #671),
+  IMPLEMENTED_PENDING_REVIEW_AND_ACTIVATION). ACK SENT 2026-10-15T02:46:05+07 to `khun-oracle-bf` (msg_id
+  `69ddfdd6-a1ca-4968-820c-d2ca8b5637fa`, Aek approved) with scope "read and understood" only: not a review or approval,
+  not a claim of activation. Queued in its inbox, not confirmed read. (3 is DONE; remaining items:) (4) independent reviewer (`verity-oracle-af` is MEMORY_BOOTSTRAP_BLOCKED and busy with #671),
   (5) worktree + 816MB `node_modules` cleanup: do NOT delete until Aek says so.
 - `khun-oracle-bf` ACKed the report 2026-10-15: re-verified #416/#409/`af637bc8` itself, does not treat the task as complete,
   will not merge/deploy or decide (A)/(B) for Aek, and will update the session name in the lock only after Aek agrees
