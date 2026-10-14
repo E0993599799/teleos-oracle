@@ -43,3 +43,59 @@ lose session context (interruption, `/clear`, handoff to a peer) with: what was
 found, why the chosen route was picked, what failed, evidence (commit/file
 refs), and the concrete next step. Keep it short — this is a pointer, not a diary;
 full detail belongs in `ψ/memory/retrospectives/` or `ψ/outbox/`.
+
+<!-- FLEET_HANDOFF_SCHEMA_V1:START -->
+## Fleet handoff schema — evidence-backed audit 2026-10-14
+
+### 1) Findings / evidence
+- Agent: `teleos`
+- Current state: AVAILABLE แต่ working tree มีการเปลี่ยนแปลง/ไฟล์ค้าง; ยังไม่อนุมานว่างานล่าสุดเสร็จหรือค้างจาก status เพียงอย่างเดียว
+- Git: branch `main`, HEAD `470756b61838`, origin `https://github.com/E0993599799/teleos-oracle.git`
+- Workspace: `/mnt/d/01 Main Work/Boots/Agentic AI/mission-control/royal-master-oracle/teleos-oracle`
+- Fleet audit evidence: `mission-control/tools/logs/handoff-fleet-evidence-20261014.txt`
+
+Recent Git evidence:
+- `470756b|2026-10-14T03:15:24+07:00|memory: update rea learning with Windows support and docs coverage`
+- `32b3f93|2026-10-14T02:34:02+07:00|memory: record /learn morluto/rea learning and update HANDOFF`
+- `0730be0|2026-10-14T02:24:05+07:00|governance: add AGENTS.md, PROJECT.md, HANDOFF.md for AGENT_MEMORY_BOOTSTRAP_V1`
+- `3dcab81|2026-10-11T18:58:07+07:00|memory: catch-up retrospective for ED Project production closure (PR #344/#348/#368)`
+- `854013d|2026-10-10T05:50:34+07:00|lab: record removal of merged KPI-dedupe worktree`
+
+Current working-tree evidence:
+- `M ψ/learn/.origins`
+- `?? ψ/learn/morluto/`
+
+Recent inbox evidence:
+- `20261001_1121_khun-oracle_clear-disk-space-d-drive.md`
+- `20260930_2151_khun-oracle_investigate-popup-terminal-windows.md`
+- `20260928_1215_khun-oracle_wp-g-decision-interaction-feedback.md`
+- `20260928_khun-oracle_dispatch-warden-for-credential-rotation.md`
+- `20260928_khun-oracle_wp-g-branch-decision.md`
+
+Recent outbox evidence:
+- `20261007_teleos-oracle_disk-space-d-drive-status.md`
+- `20261007_teleos-oracle_popup-terminal-windows-fixed.md`
+- `20260928_teleos-oracle_wp-g-pr101-i18n-complete.md`
+- `20260928_teleos-oracle_wp-g-pr100-mobile-a11y.md`
+- `20260928_teleos-oracle_wp-g-pr99-in-progress.md`
+
+### 2) Why this route
+- สร้าง/ปรับ handoff จากหลักฐานบนเครื่อง ณ เวลาตรวจ (Git HEAD/status/log + ψ/psi inbox/outbox + mission-memory gate) เพื่อให้ agent ถัดไปรับช่วงได้โดยไม่อาศัย chat-only context และไม่แต่งประวัติที่หาไม่พบ
+
+### 3) Failed attempts / blockers
+- `20260928_khun-oracle_dispatch-warden-for-credential-rotation.md`
+
+### 4) Current status / owner / next action
+- Handoff owner: `teleos` oracle workspace; execution/merge/production authority remains governed by Mission Control and the human owner.
+- Status: AVAILABLE แต่ working tree มีการเปลี่ยนแปลง/ไฟล์ค้าง; ยังไม่อนุมานว่างานล่าสุดเสร็จหรือค้างจาก status เพียงอย่างเดียว
+- Next safe action: รักษา working tree ปัจจุบันไว้ก่อน ตรวจรายการ changes ด้านล่างและ inbox/outbox ล่าสุด แล้วค่อยรับช่วงหลัง memory bootstrap
+
+### 5) Durable references / proof
+- `mission-control/tools/logs/handoff-fleet-evidence-20261014.txt`
+- `mission-control/tools/logs/handoff-fleet-standardize-20261014-proof.txt`
+- Repository HEAD at audit: `470756b61838`
+- Latest inbox: `20261001_1121_khun-oracle_clear-disk-space-d-drive.md`
+- Latest outbox: `20261007_teleos-oracle_disk-space-d-drive-status.md`
+
+> Rule for the next agent: ถ้าหลักฐานปัจจุบันขัดกับ section นี้ ให้ใช้หลักฐานใหม่กว่า, record conflict/supersession ใน mission-memory, และอัปเดต HANDOFF.md ก่อนส่งต่อ ห้ามเดา.
+<!-- FLEET_HANDOFF_SCHEMA_V1:END -->
