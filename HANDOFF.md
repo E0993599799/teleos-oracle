@@ -9,8 +9,9 @@ chat history or `ψ/outbox/` alone to carry state forward.
 ## Current state (as of 2026-10-14 19:30, verified by /recap)
 
 - Branch: `main`, HEAD `1f02f8a` (local, NOT yet pushed; `origin/main` is at `847b870`).
-- Working tree: only `?? ψ/learn/morluto/` (disposable /learn output; the durable
-  part is already committed). `ψ/learn/.origins` committed in `1f02f8a`.
+- Working tree clean after this commit. `ψ/learn/morluto/` is now TRACKED (Aek's
+  decision 2026-10-14, like `imxv`/`mattpocock`) and indexed in `ψ/INDEX.md`;
+  rea was re-learned with `--deep` at 6.5.0 (`3b79af28e`), docs in `ψ/learn/morluto/rea/`.
 - `forge-mcp` works again in this session (`project_status` PASS); the old
   "pnpm not in PATH" failure did not reproduce — likely a launch-time PATH issue.
 - Parked by Aek (do not act unless he asks about expiry): ED Project Gmail OAuth

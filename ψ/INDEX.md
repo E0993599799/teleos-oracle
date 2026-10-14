@@ -126,7 +126,7 @@ rewrite any content — [MARCUZ:Khun-Oracle] wrote this file, not Teleos.
 
 ## Learn
 
-Output of `/learn` per external repo (`learn/.origins` lists studied repos; `learn/morluto/` is untracked and not indexed).
+Output of `/learn` per external repo (`learn/.origins` lists studied repos; `learn/morluto/` tracked since 2026-10-14).
 
 ### imxv/Pretty-mermaid-skills
 
@@ -146,6 +146,19 @@ Output of `/learn` per external repo (`learn/.origins` lists studied repos; `lea
 - [0120 QUICK REFERENCE](learn/mattpocock/skills/2026-09-06/0120_QUICK-REFERENCE.md)
 - [0120 TESTING](learn/mattpocock/skills/2026-09-06/0120_TESTING.md)
 - [skills](learn/mattpocock/skills/skills.md)
+
+### morluto/rea
+
+- [rea (hub)](learn/morluto/rea/rea.md)
+- [0222 ARCHITECTURE](learn/morluto/rea/2026-10-14/0222_ARCHITECTURE.md)
+- [0222 CODE SNIPPETS](learn/morluto/rea/2026-10-14/0222_CODE-SNIPPETS.md)
+- [0222 QUICK REFERENCE](learn/morluto/rea/2026-10-14/0222_QUICK-REFERENCE.md)
+- [0222 DOCS ADDENDUM](learn/morluto/rea/2026-10-14/0222_DOCS-ADDENDUM.md)
+- [1940 API SURFACE](learn/morluto/rea/2026-10-14/1940_API-SURFACE.md)
+- [1940 ARCHITECTURE](learn/morluto/rea/2026-10-14/1940_ARCHITECTURE.md)
+- [1940 CODE SNIPPETS](learn/morluto/rea/2026-10-14/1940_CODE-SNIPPETS.md)
+- [1940 QUICK REFERENCE](learn/morluto/rea/2026-10-14/1940_QUICK-REFERENCE.md)
+- [1940 TESTING](learn/morluto/rea/2026-10-14/1940_TESTING.md)
 
 ## Writing
 
