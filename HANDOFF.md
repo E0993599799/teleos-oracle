@@ -61,13 +61,28 @@ no budget change, no paid hosted runner, no workflow edits on master, no self-ce
 - Draft PR #409 already migrates 22 workflows to `[self-hosted, Linux, X64, marcuz-linux]`. Its 5 "failed" jobs were
   timeout cancellations: one runner carries that label, jobs serialized, `npm install` ~12 min of a 15 min cap.
 - No lockfile in the repo, so `setup-node` cache is unusable; runners share one 4-core/5.9 GB host with swap in use,
-  so routing to `bpmp-ci` adds no capacity. Root cause of slow install is a hypothesis (RAM/swap), not measured.
+  so routing to `bpmp-ci` adds no capacity. Benchmark done 2026-10-15 (n=1, warm cache, host load ~9, mission-memory #1493):
+  `npm install` 4m33s, 51% CPU, run-queue 6.2 on 4 cores, peak RSS 1.3GB, swap 129->670MB with ~no swap-in. CPU contention
+  dominates; RAM/swap thrash only weakly supported. Does NOT explain CI's ~12 min (cold cache, concurrent jobs and the real
+  runner environment not measured; no `Runner.Listener` visible in this WSL, so where the runner executes is unverified).
 - Nothing changed in `pharmacy-expiry-system`. Clean worktree left at
   `/home/marcuz/.worktrees/pharmacy-expiry-system/ci-tune-runner-cache-20261015` (branch `ci/runner-cache-routing-20261015`
   @ `d3b714488`); remove it if Aek declines the benchmark.
-- Awaiting Aek: (1) allow `npm install` benchmark on runner host, (2) test-vs-workflow decision, (3) evidence report under
-  `man-os-library/reports/`, (4) whether to send `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1 (NOT sent; policy file not
-  yet read), (5) final report to khun-oracle-5a is still owed.
+- DONE 2026-10-15: benchmark run (Aek approved); evidence report written to
+  `mission-control/man-os-library/reports/2026-10-15-bpmp-pr416-ci-followup-evidence.md` and indexed (commit `af637bc8`, pushed);
+  final report SENT to `khun-oracle-bf` (msg_id `5ff21bc7-d65c-400e-a977-846a7efe2370`) on Aek's instruction, because the
+  lock's governor `khun-oracle-5a` was not live in `ListAgents`. Delivery only confirmed as queued in its inbox, NOT read/acked.
+  The lock file still names `khun-oracle-5a`; I did not edit it (governor's call). No independent reviewer contacted yet
+  (`verity-oracle-af` was idle). Not self-certified.
+- Still awaiting: (1) Aek + independent reviewer: test-vs-workflow decision for `cancel-in-progress`, (2) whether to benchmark
+  more (cold cache / idle host), (3) `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1: policy READ 2026-10-15
+  (`governance/repeat-failure-learning-policy-v1.yaml` on `origin/feat/repeat-failure-learning-gate-v1-20261014`, status
+  IMPLEMENTED_PENDING_REVIEW_AND_ACTIVATION) but ACK NOT sent; proposed scope = "read and understood" only, not a review or
+  approval, Aek has not decided, (4) independent reviewer (`verity-oracle-af` is MEMORY_BOOTSTRAP_BLOCKED and busy with #671),
+  (5) worktree + 816MB `node_modules` cleanup: do NOT delete until Aek says so.
+- `khun-oracle-bf` ACKed the report 2026-10-15: re-verified #416/#409/`af637bc8` itself, does not treat the task as complete,
+  will not merge/deploy or decide (A)/(B) for Aek, and will update the session name in the lock only after Aek agrees
+  (not yet done).
 - `forge-mcp` CONNECT_TIMEOUT: mitigated 2026-10-15 (mission-memory #1490, supersedes #1481). Startup measured
   9-17s under load (tsx compile + `/mnt/d`), so the 30s default is easily exceeded when busy. Added
   `env.MCP_TIMEOUT="60000"` to `~/.claude/settings.json` (backup `settings.json.bak-20261015-mcp-timeout`);
