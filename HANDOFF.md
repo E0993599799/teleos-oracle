@@ -6,10 +6,17 @@ and `khun-oracle` for the same gap). Update it on any multi-session task per
 `~/.claude/RTK.md`'s Pre-Interruption Handoff Protocol, rather than relying on
 chat history or `ψ/outbox/` alone to carry state forward.
 
-## Current state (as of 2026-10-14 19:30, verified by /recap)
+## Current state (as of 2026-10-14 23:50, verified by /recap after `git fetch`)
 
-- Branch: `main`, HEAD `1f02f8a` (local, NOT yet pushed; `origin/main` is at `847b870`).
-- Working tree clean after this commit. `ψ/learn/morluto/` is now TRACKED (Aek's
+- Branch: `main`, HEAD `0ccad44`, in sync with `origin/main` (0 ahead / 0 behind after
+  fetch). `1f02f8a` is already on `origin/main` — the earlier "unpushed" note below is superseded.
+- `forge-mcp` FAILS to connect in the 2026-10-14 23:09 session (`CONNECT_TIMEOUT` 30s).
+  `pnpm` and the bridge dir exist and `start:dev` stays alive for 10s without crashing, so
+  it is not a missing-PATH failure; likely slow startup (`node --import tsx` on `/mnt/d`)
+  or no initialize reply within 30s. Cause NOT confirmed — a timing probe was inconclusive.
+- Stale mission-memory items (work shipped via PR #344/#348/#368): blocker #1339 and
+  next-action #1322 are obsolete.
+- Older state (2026-10-14 19:30): `ψ/learn/morluto/` is now TRACKED (Aek's
   decision 2026-10-14, like `imxv`/`mattpocock`) and indexed in `ψ/INDEX.md`;
   rea was re-learned with `--deep` at 6.5.0 (`3b79af28e`), docs in `ψ/learn/morluto/rea/`.
 - `forge-mcp` works again in this session (`project_status` PASS); the old
@@ -41,8 +48,32 @@ chat history or `ψ/outbox/` alone to carry state forward.
   gate (`MEMORY_BOOTSTRAP_BLOCKED` — these three files were missing). User chose
   to have the missing governance files created rather than skip or bypass the gate.
 
+## In-flight: BPMP PR #416 CI follow-up (2026-10-15, executor = teleos, governor = khun-oracle-5a)
+
+Brief/lock: `mission-control/ψ/fleet/governor-locks/bpmp-pr416-ci-followup-20261014.md`.
+Evidence: mission-memory #1483 (scope `bpmp-pr416-ci-followup-20261014`). Hard limits: no merge/deploy,
+no budget change, no paid hosted runner, no workflow edits on master, no self-certify (independent reviewer needed).
+
+- Hosted proof jobs fail with 0 steps: "Actions budget is preventing further use" (jobs 115976164579, 115975887700).
+- `phase0-security` on #416 (job 115976366842) fails at step 12: `tests/security-hardening.test.mjs:156` wants
+  `cancel-in-progress: false`, master + PR head have `true` (commit `10d54158d`). Pre-existing on master, not from #416.
+  Open decision (Aek + independent reviewer): fix the test or the workflow.
+- Draft PR #409 already migrates 22 workflows to `[self-hosted, Linux, X64, marcuz-linux]`. Its 5 "failed" jobs were
+  timeout cancellations: one runner carries that label, jobs serialized, `npm install` ~12 min of a 15 min cap.
+- No lockfile in the repo, so `setup-node` cache is unusable; runners share one 4-core/5.9 GB host with swap in use,
+  so routing to `bpmp-ci` adds no capacity. Root cause of slow install is a hypothesis (RAM/swap), not measured.
+- Nothing changed in `pharmacy-expiry-system`. Clean worktree left at
+  `/home/marcuz/.worktrees/pharmacy-expiry-system/ci-tune-runner-cache-20261015` (branch `ci/runner-cache-routing-20261015`
+  @ `d3b714488`); remove it if Aek declines the benchmark.
+- Awaiting Aek: (1) allow `npm install` benchmark on runner host, (2) test-vs-workflow decision, (3) evidence report under
+  `man-os-library/reports/`, (4) whether to send `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1 (NOT sent; policy file not
+  yet read), (5) final report to khun-oracle-5a is still owed.
+- Also open: `forge-mcp` CONNECT_TIMEOUT (mission-memory #1481, cause unconfirmed).
+- Longer handoff (temp, may vanish): `/tmp/claude-1000/-mnt-d-01-Main-Work-Boots-Agentic-AI-mission-control-royal-master-oracle-teleos-oracle/560114ff-3515-46db-ac8b-9c87334cd534/scratchpad/handoff-teleos-pr416-ci-20261015.md`.
+
 ## Next safe action
 
+- Re-verify PR #416 / #409 with `gh` before acting; do not rely on the facts above if time has passed.
 - `/learn https://github.com/morluto/rea` is DONE (2026-10-14): 3 docs + hub in
   `ψ/learn/morluto/rea/`, learning in `ψ/memory/learnings/2026-10-14_learn-morluto-rea.md`.
   Learning file committed (`32b3f93`, `470756b`); `ψ/learn/morluto/` stays uncommitted
