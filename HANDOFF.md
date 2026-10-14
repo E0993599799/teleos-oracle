@@ -84,6 +84,14 @@ no budget change, no paid hosted runner, no workflow edits on master, no self-ce
 - `khun-oracle-bf` ACKed the report 2026-10-15: re-verified #416/#409/`af637bc8` itself, does not treat the task as complete,
   will not merge/deploy or decide (A)/(B) for Aek, and will update the session name in the lock only after Aek agrees
   (not yet done).
+- GOVERNOR CHANGED 2026-10-15 ~05:40: `khun-oracle-bf` is no longer reachable (`SendMessage` error); `khun-oracle-5a` was gone
+  earlier. Live Khun session is now `khun-oracle-5c` (idle, tmux `13-khun-ram`). Locks still name the old sessions; I edited
+  none. Aek told me to send to `-5c`, but whether it holds the governor context is unconfirmed.
+- Sent to `khun-oracle-5c` 2026-10-15 (Aek approved), queued, NOT confirmed read: `BUDGET_GATE_ACK` (msg_id
+  `5bb46378-7a94-4888-bdd4-0acbba3c0b4b`; scope = read policy `governance/github-budget-authorization-policy-v1.yaml` in full
+  and will comply, not a review, did not read `tools/main-flow-gate.ps1`; GitHub budget hard gate: no budget/paid-usage change
+  without Ekkarat's specific approval in the current request) and the #659 health-check report (msg_id
+  `3804b975-4816-45b3-a67d-e5ecbef0b1d3`). The `BUDGET_GATE_ACK` request came from `-bf`; my first ACK to `-bf` failed to send (not reachable).
 - `forge-mcp` CONNECT_TIMEOUT: mitigated 2026-10-15 (mission-memory #1490, supersedes #1481). Startup measured
   9-17s under load (tsx compile + `/mnt/d`), so the 30s default is easily exceeded when busy. Added
   `env.MCP_TIMEOUT="60000"` to `~/.claude/settings.json` (backup `settings.json.bak-20261015-mcp-timeout`);
@@ -91,6 +99,21 @@ no budget change, no paid hosted runner, no workflow edits on master, no self-ce
   consider building `forge-mcp-bridge` to JS to skip tsx.
 - `main` pushed: `64e6d74` is on `origin/main` (Aek approved 2026-10-15).
 - Longer handoff (temp, may vanish): `/tmp/claude-1000/-mnt-d-01-Main-Work-Boots-Agentic-AI-mission-control-royal-master-oracle-teleos-oracle/560114ff-3515-46db-ac8b-9c87334cd534/scratchpad/handoff-teleos-pr416-ci-20261015.md`.
+
+## In-flight: mission-control #659 BPMP KPI MTD two-image OCR (assigned 2026-10-15, NOT started)
+
+Lock: `mission-control/ψ/fleet/governor-locks/bpmp-kpi-mtd-ocr-659.md` (names `khun-oracle-bf`; file untracked at last check).
+Contract: `royal-master-oracle/khun-oracle/ψ/inbox/gh-bridge-bpmp-kpi-mtd-ocr-20261012-r2.md` (r1 same mission). Executor = teleos.
+Status: delegated by a peer message, I have NOT accepted execution and changed nothing. BLOCKED on missing inputs (checked 05:39):
+- failed run dir `backup/temp-time-load-doc/ocr-kpi-mtd_25691012_075155` does not exist (only `tools/logs/ocr-kpi-mtd_25691012_075155_{run,error}.log`,
+  no image paths in them);
+- `NN_OCR_KPI_MTD_TWO_IMAGES_v2/v3.ps1` not found (mission-control, depth 6);
+- the two source screenshots not found (no png/jpg within 3 levels of `backup/`; not searched outside mission-control).
+Tools OK: `powershell.exe`/`pwsh` on PATH, `C:\Program Files\Tesseract-OCR\tesseract.exe` exists.
+Not yet done: read mission-control AGENTS/PROJECT/HANDOFF/README, session/branch/worktree assignment (none created).
+Rules: no invented values (NO7/Profit/%GP/TX/Thai ADC stay null, never map FR to NO7), no silent zero-coercion, no production data
+changes before extraction proof, no force-push, no self-certify, no COMPLETE/DONE/OK without proof. Store 4340 acceptance values are in the contract.
+Next: get image/script locations from Aek or Khun, then bootstrap on mission-control, then extraction with per-cell proof.
 
 ## Next safe action
 
