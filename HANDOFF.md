@@ -6,7 +6,16 @@ and `khun-oracle` for the same gap). Update it on any multi-session task per
 `~/.claude/RTK.md`'s Pre-Interruption Handoff Protocol, rather than relying on
 chat history or `ψ/outbox/` alone to carry state forward.
 
-## Current state (as of 2026-10-13)
+## Current state (as of 2026-10-14 08:50, verified by /recap)
+
+- Branch: `main`, HEAD `f6295d6`, in sync with `origin/main`.
+- Working tree: `M ψ/learn/.origins` (+`morluto/rea`) and `?? ψ/learn/morluto/`
+  (disposable /learn output; the durable part is already committed).
+- `forge-mcp` fails to connect (`pnpm` not in PATH) — fix before any task that needs it.
+- No open thread, blocker, or next-action found in mission-memory (bootstrap +
+  `memory_search`); treat prior work as closed.
+
+### Historical notes (2026-10-13 session start)
 
 - Branch: `main`, working tree clean at session start.
 - Most recent work (from `git log`): backlog catch-up and lab-archival commits —
@@ -31,8 +40,10 @@ chat history or `ψ/outbox/` alone to carry state forward.
 
 - `/learn https://github.com/morluto/rea` is DONE (2026-10-14): 3 docs + hub in
   `ψ/learn/morluto/rea/`, learning in `ψ/memory/learnings/2026-10-14_learn-morluto-rea.md`.
-  Not yet committed (`ψ/learn/` is disposable per fleet hygiene; the learning file is the durable part).
+  Learning file committed (`32b3f93`, `470756b`); `ψ/learn/morluto/` stays uncommitted
+  (`ψ/learn/` is disposable per fleet hygiene; the learning file is the durable part).
 - Governance files committed + pushed as `0730be0`.
+- Optional cleanup: decide whether to commit `ψ/learn/.origins` or restore it.
 - No other pending thread is known; treat any prior in-flight task as closed
   unless `ψ/outbox/` or recent commits say otherwise.
 
