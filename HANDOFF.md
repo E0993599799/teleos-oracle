@@ -6,12 +6,16 @@ and `khun-oracle` for the same gap). Update it on any multi-session task per
 `~/.claude/RTK.md`'s Pre-Interruption Handoff Protocol, rather than relying on
 chat history or `ψ/outbox/` alone to carry state forward.
 
-## Current state (as of 2026-10-14 08:50, verified by /recap)
+## Current state (as of 2026-10-14 19:30, verified by /recap)
 
-- Branch: `main`, HEAD `f6295d6`, in sync with `origin/main`.
-- Working tree: `M ψ/learn/.origins` (+`morluto/rea`) and `?? ψ/learn/morluto/`
-  (disposable /learn output; the durable part is already committed).
-- `forge-mcp` fails to connect (`pnpm` not in PATH) — fix before any task that needs it.
+- Branch: `main`, HEAD `1f02f8a` (local, NOT yet pushed; `origin/main` is at `847b870`).
+- Working tree: only `?? ψ/learn/morluto/` (disposable /learn output; the durable
+  part is already committed). `ψ/learn/.origins` committed in `1f02f8a`.
+- `forge-mcp` works again in this session (`project_status` PASS); the old
+  "pnpm not in PATH" failure did not reproduce — likely a launch-time PATH issue.
+- Parked by Aek (do not act unless he asks about expiry): ED Project Gmail OAuth
+  refresh token expires ~7 days (mission-memory #1408).
+- Session start rule from Aek: always read AGENTS.md, HANDOFF.md, PROJECT.md, README.md.
 - No open thread, blocker, or next-action found in mission-memory (bootstrap +
   `memory_search`); treat prior work as closed.
 
@@ -43,7 +47,7 @@ chat history or `ψ/outbox/` alone to carry state forward.
   Learning file committed (`32b3f93`, `470756b`); `ψ/learn/morluto/` stays uncommitted
   (`ψ/learn/` is disposable per fleet hygiene; the learning file is the durable part).
 - Governance files committed + pushed as `0730be0`.
-- Optional cleanup: decide whether to commit `ψ/learn/.origins` or restore it.
+- `ψ/learn/.origins` cleanup DONE (committed `1f02f8a`); push to origin pending Aek's OK.
 - No other pending thread is known; treat any prior in-flight task as closed
   unless `ψ/outbox/` or recent commits say otherwise.
 
