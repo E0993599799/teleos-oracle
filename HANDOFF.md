@@ -68,7 +68,12 @@ no budget change, no paid hosted runner, no workflow edits on master, no self-ce
 - Awaiting Aek: (1) allow `npm install` benchmark on runner host, (2) test-vs-workflow decision, (3) evidence report under
   `man-os-library/reports/`, (4) whether to send `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1 (NOT sent; policy file not
   yet read), (5) final report to khun-oracle-5a is still owed.
-- Also open: `forge-mcp` CONNECT_TIMEOUT (mission-memory #1481, cause unconfirmed).
+- `forge-mcp` CONNECT_TIMEOUT: mitigated 2026-10-15 (mission-memory #1490, supersedes #1481). Startup measured
+  9-17s under load (tsx compile + `/mnt/d`), so the 30s default is easily exceeded when busy. Added
+  `env.MCP_TIMEOUT="60000"` to `~/.claude/settings.json` (backup `settings.json.bak-20261015-mcp-timeout`);
+  effective from the next session. Cause is probable, not reproduced under failure. If it recurs at 60s,
+  consider building `forge-mcp-bridge` to JS to skip tsx.
+- `main` pushed: `64e6d74` is on `origin/main` (Aek approved 2026-10-15).
 - Longer handoff (temp, may vanish): `/tmp/claude-1000/-mnt-d-01-Main-Work-Boots-Agentic-AI-mission-control-royal-master-oracle-teleos-oracle/560114ff-3515-46db-ac8b-9c87334cd534/scratchpad/handoff-teleos-pr416-ci-20261015.md`.
 
 ## Next safe action
