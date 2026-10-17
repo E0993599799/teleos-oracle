@@ -1,139 +1,66 @@
 # HANDOFF.md — teleos-oracle
 
-Living handoff doc for `AGENT_MEMORY_BOOTSTRAP_V1`. Created 2026-10-13 — this file
-did not exist before (fleet-wide gap, not specific to this repo; see `serra-oracle`
-and `khun-oracle` for the same gap). Update it on any multi-session task per
-`~/.claude/RTK.md`'s Pre-Interruption Handoff Protocol, rather than relying on
-chat history or `ψ/outbox/` alone to carry state forward.
+Living handoff doc for `AGENT_MEMORY_BOOTSTRAP_V1`. Update it on any multi-session task per
+`~/.claude/RTK.md`'s Pre-Interruption Handoff Protocol, rather than relying on chat history or
+`ψ/outbox/` alone. This file is injected into every session start, so keep it short.
+Full pre-trim version (2026-10-17, nothing removed from history):
+`ψ/memory/handoff-archive/2026-10-17_HANDOFF-before-trim.md`.
 
-## Current state (as of 2026-10-14 23:50, verified by /recap after `git fetch`)
+## Current state (as of 2026-10-17, verified after `git fetch`)
 
-- Branch: `main`, HEAD `0ccad44`, in sync with `origin/main` (0 ahead / 0 behind after
-  fetch). `1f02f8a` is already on `origin/main` — the earlier "unpushed" note below is superseded.
-- `forge-mcp` FAILS to connect in the 2026-10-14 23:09 session (`CONNECT_TIMEOUT` 30s).
-  `pnpm` and the bridge dir exist and `start:dev` stays alive for 10s without crashing, so
-  it is not a missing-PATH failure; likely slow startup (`node --import tsx` on `/mnt/d`)
-  or no initialize reply within 30s. Cause NOT confirmed — a timing probe was inconclusive.
-- Stale mission-memory items (work shipped via PR #344/#348/#368): blocker #1339 and
-  next-action #1322 are obsolete.
-- Older state (2026-10-14 19:30): `ψ/learn/morluto/` is now TRACKED (Aek's
-  decision 2026-10-14, like `imxv`/`mattpocock`) and indexed in `ψ/INDEX.md`;
-  rea was re-learned with `--deep` at 6.5.0 (`3b79af28e`), docs in `ψ/learn/morluto/rea/`.
-- `forge-mcp` works again in this session (`project_status` PASS); the old
-  "pnpm not in PATH" failure did not reproduce — likely a launch-time PATH issue.
-- Parked by Aek (do not act unless he asks about expiry): ED Project Gmail OAuth
-  refresh token expires ~7 days (mission-memory #1408).
+- Branch: `main`, HEAD `8801b3b`, 0 ahead / 0 behind `origin/main`.
 - Session start rule from Aek: always read AGENTS.md, HANDOFF.md, PROJECT.md, README.md.
-- No open thread, blocker, or next-action found in mission-memory (bootstrap +
-  `memory_search`); treat prior work as closed.
+- Parked by Aek (do not act unless he asks about expiry): ED Project Gmail OAuth refresh token
+  expires ~7 days (mission-memory #1408).
+- `forge-mcp` CONNECT_TIMEOUT mitigated 2026-10-15 (mission-memory #1490): `env.MCP_TIMEOUT="60000"`
+  in `~/.claude/settings.json`. If it recurs at 60s, consider building `forge-mcp-bridge` to JS to skip tsx.
+- SessionStart hook (Orca → `agent-memory-bootstrap.sh`) timeout raised 10s → 30s on 2026-10-17
+  (median run ~8s, p90 ~15s under load; was timing out ~40% of the time). Orca may overwrite it.
+- Governance work is closed: ED Project retrospective shipped (PR #344/#348/#368), `/learn morluto/rea`
+  done, `ψ/learn/morluto/` is tracked (Aek's decision 2026-10-14).
 
-### Historical notes (2026-10-13 session start)
+## In-flight: BPMP PR #416 CI follow-up (executor = teleos, governor changed — see below)
 
-- Branch: `main`, working tree clean at session start.
-- Most recent work (from `git log`): backlog catch-up and lab-archival commits —
-  `3dcab81` (ED Project production closure retrospective, PR #344/#348/#368),
-  `854013d`/`c8d61ef` (worktree archival/removal), `0f568f0` (popup-terminal-windows
-  closure + disk-space status + ED-project/KPI-dedupe pivot), `f23dced` (PowerShell
-  cleanup-script permission config).
-- This session's own work (not yet written to `ψ/`): cleaned up a `cms-arigeo`
-  duplicate clone and legacy Next.js scaffold under
-  `mission-control/cms-arigeo` (separate repo, not this one) — deleted stale
-  `node_modules` in several places, discovered and repaired local git object
-  corruption there via a fresh clone + swap, committed and pushed
-  (`33853b0` on `fix/admin-nav-wiring-and-perf`). Also deleted a stray
-  `node_modules` in an unrelated `pharmacy-expiry-system` hermes worktree.
-  None of this touches teleos-oracle's own repo.
-- This session's trigger for creating `AGENTS.md`/`PROJECT.md`/`HANDOFF.md`:
-  invoking `/learn https://github.com/morluto/rea` hit the mandatory bootstrap
-  gate (`MEMORY_BOOTSTRAP_BLOCKED` — these three files were missing). User chose
-  to have the missing governance files created rather than skip or bypass the gate.
-
-## In-flight: BPMP PR #416 CI follow-up (2026-10-15, executor = teleos, governor = khun-oracle-5a)
-
-Brief/lock: `mission-control/ψ/fleet/governor-locks/bpmp-pr416-ci-followup-20261014.md`.
-Evidence: mission-memory #1483 (scope `bpmp-pr416-ci-followup-20261014`). Hard limits: no merge/deploy,
-no budget change, no paid hosted runner, no workflow edits on master, no self-certify (independent reviewer needed).
-
-- Hosted proof jobs fail with 0 steps: "Actions budget is preventing further use" (jobs 115976164579, 115975887700).
-- `phase0-security` on #416 (job 115976366842) fails at step 12: `tests/security-hardening.test.mjs:156` wants
-  `cancel-in-progress: false`, master + PR head have `true` (commit `10d54158d`). Pre-existing on master, not from #416.
-  Open decision (Aek + independent reviewer): fix the test or the workflow.
-- Draft PR #409 already migrates 22 workflows to `[self-hosted, Linux, X64, marcuz-linux]`. Its 5 "failed" jobs were
-  timeout cancellations: one runner carries that label, jobs serialized, `npm install` ~12 min of a 15 min cap.
-- No lockfile in the repo, so `setup-node` cache is unusable; runners share one 4-core/5.9 GB host with swap in use,
-  so routing to `bpmp-ci` adds no capacity. Benchmark done 2026-10-15 (n=1, warm cache, host load ~9, mission-memory #1493):
-  `npm install` 4m33s, 51% CPU, run-queue 6.2 on 4 cores, peak RSS 1.3GB, swap 129->670MB with ~no swap-in. CPU contention
-  dominates; RAM/swap thrash only weakly supported. Does NOT explain CI's ~12 min (cold cache, concurrent jobs and the real
-  runner environment not measured; no `Runner.Listener` visible in this WSL, so where the runner executes is unverified).
-- Nothing changed in `pharmacy-expiry-system`. Clean worktree left at
+Lock: `mission-control/ψ/fleet/governor-locks/bpmp-pr416-ci-followup-20261014.md`. Evidence: mission-memory #1483, #1493.
+Hard limits: no merge/deploy, no budget change, no paid hosted runner, no workflow edits on master, no self-certify.
+State (PR #416 OPEN, #409 draft OPEN — re-verified 2026-10-17):
+- Hosted jobs fail with 0 steps ("Actions budget is preventing further use"). `phase0-security` fails because
+  `tests/security-hardening.test.mjs:156` wants `cancel-in-progress: false` but master + PR head have `true`
+  (pre-existing on master). Open decision (Aek + independent reviewer): fix the test or the workflow.
+- Benchmark done 2026-10-15 (n=1, warm cache, host load ~9): `npm install` 4m33s, CPU contention dominates.
+  Does NOT explain CI's ~12 min. Report: `mission-control/man-os-library/reports/2026-10-15-bpmp-pr416-ci-followup-evidence.md`
+  (commit `af637bc8`, pushed).
+- GOVERNOR CHANGED 2026-10-15: `khun-oracle-5a` and `-bf` unreachable; live Khun session is `khun-oracle-5c`
+  (unconfirmed it holds governor context). Locks still name old sessions; I edited none (governor's call).
+- Sent to `-5c`, queued, NOT confirmed read: `BUDGET_GATE_ACK` (msg `5bb46378-7a94-4888-bdd4-0acbba3c0b4b`, scope = read policy
+  and will comply, not a review) and the #659 health-check report (msg `3804b975-4816-45b3-a67d-e5ecbef0b1d3`).
+  Earlier `RFL_ACK` (read-and-understood only) went to `-bf` (msg `69ddfdd6-a1ca-4968-820c-d2ca8b5637fa`).
+- Still awaiting: (1) Aek + independent reviewer: test-vs-workflow decision; (2) whether to benchmark more
+  (cold cache / idle host); (3) independent reviewer (`verity-oracle-af` was blocked/busy); (4) cleanup of worktree
   `/home/marcuz/.worktrees/pharmacy-expiry-system/ci-tune-runner-cache-20261015` (branch `ci/runner-cache-routing-20261015`
-  @ `d3b714488`); remove it if Aek declines the benchmark.
-- DONE 2026-10-15: benchmark run (Aek approved); evidence report written to
-  `mission-control/man-os-library/reports/2026-10-15-bpmp-pr416-ci-followup-evidence.md` and indexed (commit `af637bc8`, pushed);
-  final report SENT to `khun-oracle-bf` (msg_id `5ff21bc7-d65c-400e-a977-846a7efe2370`) on Aek's instruction, because the
-  lock's governor `khun-oracle-5a` was not live in `ListAgents`. Delivery only confirmed as queued in its inbox, NOT read/acked.
-  The lock file still names `khun-oracle-5a`; I did not edit it (governor's call). No independent reviewer contacted yet
-  (`verity-oracle-af` was idle). Not self-certified.
-- Still awaiting: (1) Aek + independent reviewer: test-vs-workflow decision for `cancel-in-progress`, (2) whether to benchmark
-  more (cold cache / idle host), (3) `RFL_ACK` for REPEAT_FAILURE_LEARNING_GATE_V1: policy READ 2026-10-15
-  (`governance/repeat-failure-learning-policy-v1.yaml` on `origin/feat/repeat-failure-learning-gate-v1-20261014`, status
-  IMPLEMENTED_PENDING_REVIEW_AND_ACTIVATION). ACK SENT 2026-10-15T02:46:05+07 to `khun-oracle-bf` (msg_id
-  `69ddfdd6-a1ca-4968-820c-d2ca8b5637fa`, Aek approved) with scope "read and understood" only: not a review or approval,
-  not a claim of activation. Queued in its inbox, not confirmed read. (3 is DONE; remaining items:) (4) independent reviewer (`verity-oracle-af` is MEMORY_BOOTSTRAP_BLOCKED and busy with #671),
-  (5) worktree + 816MB `node_modules` cleanup: do NOT delete until Aek says so.
-- `khun-oracle-bf` ACKed the report 2026-10-15: re-verified #416/#409/`af637bc8` itself, does not treat the task as complete,
-  will not merge/deploy or decide (A)/(B) for Aek, and will update the session name in the lock only after Aek agrees
-  (not yet done).
-- GOVERNOR CHANGED 2026-10-15 ~05:40: `khun-oracle-bf` is no longer reachable (`SendMessage` error); `khun-oracle-5a` was gone
-  earlier. Live Khun session is now `khun-oracle-5c` (idle, tmux `13-khun-ram`). Locks still name the old sessions; I edited
-  none. Aek told me to send to `-5c`, but whether it holds the governor context is unconfirmed.
-- Sent to `khun-oracle-5c` 2026-10-15 (Aek approved), queued, NOT confirmed read: `BUDGET_GATE_ACK` (msg_id
-  `5bb46378-7a94-4888-bdd4-0acbba3c0b4b`; scope = read policy `governance/github-budget-authorization-policy-v1.yaml` in full
-  and will comply, not a review, did not read `tools/main-flow-gate.ps1`; GitHub budget hard gate: no budget/paid-usage change
-  without Ekkarat's specific approval in the current request) and the #659 health-check report (msg_id
-  `3804b975-4816-45b3-a67d-e5ecbef0b1d3`). The `BUDGET_GATE_ACK` request came from `-bf`; my first ACK to `-bf` failed to send (not reachable).
-- `forge-mcp` CONNECT_TIMEOUT: mitigated 2026-10-15 (mission-memory #1490, supersedes #1481). Startup measured
-  9-17s under load (tsx compile + `/mnt/d`), so the 30s default is easily exceeded when busy. Added
-  `env.MCP_TIMEOUT="60000"` to `~/.claude/settings.json` (backup `settings.json.bak-20261015-mcp-timeout`);
-  effective from the next session. Cause is probable, not reproduced under failure. If it recurs at 60s,
-  consider building `forge-mcp-bridge` to JS to skip tsx.
-- `main` pushed: `64e6d74` is on `origin/main` (Aek approved 2026-10-15).
-- Longer handoff (temp, may vanish): `/tmp/claude-1000/-mnt-d-01-Main-Work-Boots-Agentic-AI-mission-control-royal-master-oracle-teleos-oracle/560114ff-3515-46db-ac8b-9c87334cd534/scratchpad/handoff-teleos-pr416-ci-20261015.md`.
+  @ `d3b714488`, 816MB `node_modules`) — do NOT delete until Aek says so (still exists 2026-10-17).
 
 ## In-flight: mission-control #659 BPMP KPI MTD two-image OCR (assigned 2026-10-15, NOT started)
 
-Lock: `mission-control/ψ/fleet/governor-locks/bpmp-kpi-mtd-ocr-659.md` (names `khun-oracle-bf`; file untracked at last check).
-Contract: `royal-master-oracle/khun-oracle/ψ/inbox/gh-bridge-bpmp-kpi-mtd-ocr-20261012-r2.md` (r1 same mission). Executor = teleos.
-Status: delegated by a peer message, I have NOT accepted execution and changed nothing. BLOCKED on missing inputs (checked 05:39):
-- failed run dir `backup/temp-time-load-doc/ocr-kpi-mtd_25691012_075155` does not exist (only `tools/logs/ocr-kpi-mtd_25691012_075155_{run,error}.log`,
-  no image paths in them);
-- `NN_OCR_KPI_MTD_TWO_IMAGES_v2/v3.ps1` not found (mission-control, depth 6);
-- the two source screenshots not found (no png/jpg within 3 levels of `backup/`; not searched outside mission-control).
-Tools OK: `powershell.exe`/`pwsh` on PATH, `C:\Program Files\Tesseract-OCR\tesseract.exe` exists.
-Not yet done: read mission-control AGENTS/PROJECT/HANDOFF/README, session/branch/worktree assignment (none created).
-Rules: no invented values (NO7/Profit/%GP/TX/Thai ADC stay null, never map FR to NO7), no silent zero-coercion, no production data
-changes before extraction proof, no force-push, no self-certify, no COMPLETE/DONE/OK without proof. Store 4340 acceptance values are in the contract.
+Lock: `mission-control/ψ/fleet/governor-locks/bpmp-kpi-mtd-ocr-659.md` (names `khun-oracle-bf`). Contract:
+`royal-master-oracle/khun-oracle/ψ/inbox/gh-bridge-bpmp-kpi-mtd-ocr-20261012-r2.md`. Executor = teleos.
+Delegated by a peer message; I have NOT accepted execution and changed nothing. BLOCKED on missing inputs (checked 2026-10-15 05:39):
+the failed run dir `backup/temp-time-load-doc/ocr-kpi-mtd_25691012_075155`, `NN_OCR_KPI_MTD_TWO_IMAGES_v2/v3.ps1`, and the
+two source screenshots were not found. Tools OK (`powershell.exe`/`pwsh`, Tesseract).
+Rules: no invented values (NO7/Profit/%GP/TX/Thai ADC stay null, never map FR to NO7), no silent zero-coercion, no production
+data changes before extraction proof, no force-push, no self-certify, no DONE/OK without proof.
 Next: get image/script locations from Aek or Khun, then bootstrap on mission-control, then extraction with per-cell proof.
 
 ## Next safe action
 
 - Re-verify PR #416 / #409 with `gh` before acting; do not rely on the facts above if time has passed.
-- `/learn https://github.com/morluto/rea` is DONE (2026-10-14): 3 docs + hub in
-  `ψ/learn/morluto/rea/`, learning in `ψ/memory/learnings/2026-10-14_learn-morluto-rea.md`.
-  Learning file committed (`32b3f93`, `470756b`); `ψ/learn/morluto/` stays uncommitted
-  (`ψ/learn/` is disposable per fleet hygiene; the learning file is the durable part).
-- Governance files committed + pushed as `0730be0`.
-- `ψ/learn/.origins` cleanup DONE (committed `1f02f8a`); push to origin pending Aek's OK.
-- No other pending thread is known; treat any prior in-flight task as closed
-  unless `ψ/outbox/` or recent commits say otherwise.
+- Otherwise treat prior in-flight tasks as closed unless `ψ/outbox/` or recent commits say otherwise.
 
 ## How to update this file
 
-Replace "Current state" and "Next safe action" above whenever you're about to
-lose session context (interruption, `/clear`, handoff to a peer) with: what was
-found, why the chosen route was picked, what failed, evidence (commit/file
-refs), and the concrete next step. Keep it short — this is a pointer, not a diary;
-full detail belongs in `ψ/memory/retrospectives/` or `ψ/outbox/`.
+Replace "Current state" and "Next safe action" whenever you're about to lose session context (interruption, `/clear`,
+handoff to a peer): what was found, why the route was picked, what failed, evidence (commit/file refs), concrete next step.
+Keep it short — this is a pointer, not a diary; detail belongs in `ψ/memory/retrospectives/` or `ψ/outbox/`.
 
 <!-- FLEET_HANDOFF_SCHEMA_V1:START -->
 ## Fleet handoff schema — evidence-backed audit 2026-10-14
