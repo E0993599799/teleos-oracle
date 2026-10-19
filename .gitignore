@@ -1,3 +1,7 @@
 # Ignore origin symlinks only (source lives in ghq)
 # Note: no trailing slash - origin is a symlink, not a directory
 ψ/learn/**/origin
+
+# disk monitor runtime output (regenerated on each run)
+ψ/memory/disk-snapshots/monitor.log
+ψ/outbox/DISK_LOW_ALERT.md
