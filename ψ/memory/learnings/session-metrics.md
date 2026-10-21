@@ -25,3 +25,4 @@ applies here without any change to this repo's own CLAUDE.md. A 3-week-stale unc
 install like the 08-27 case should surface immediately at session start going forward,
 not get found later via `/recap`.
 | 2026-10-20 09:58 | unknown | trivial: /rrr right after /clear, gates only (RTK + memory_bootstrap), no work | none | gates ran first, repo clean | forge-mcp CONNECT_TIMEOUT at startup (accepted, #1940) | none |
+| 2026-10-21 03:40 | ms_be1be95b | trivial: /rrr light, gates only (RTK + memory_bootstrap), no work | none | gates ran first, repo clean | forge-mcp CONNECT_TIMEOUT (accepted, #1940) | none |
